@@ -1,0 +1,38 @@
+# Number of classes
+nc: 3  # [animal, vehicle, person]
+
+depth_multiple: 0.7
+width_multiple: 0.9
+
+
+# Backbone (Feature Extractor)
+backbone:
+  - type: Conv
+    args: [32, 3, 1]
+  - type: C2f
+    args: [64, 3]
+  - type: Conv
+    args: [128, 3, 2]
+  - type: C2f
+    args: [128, 3]
+  - type: Conv
+    args: [256, 3, 2]
+  - type: C2f
+    args: [256, 3]
+  - type: SPPF
+    args: [256, 5]
+
+# Head (Detection layers)
+head:
+  - type: Conv
+    args: [256, 3, 1]
+  - type: C2f
+    args: [128, 3]
+  - type: Conv
+    args: [128, 3, 1]
+  - type: Detect
+    args:
+      num_classes: 3
+      anchors: [[10,13, 16,30, 33,23],
+                [30,61, 62,45, 59,119],
+                [116,90, 156,198, 373,326]]
